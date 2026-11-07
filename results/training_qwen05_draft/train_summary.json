@@ -1,0 +1,24 @@
+{
+  "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "dtype": "torch.bfloat16",
+  "trainable_params": 8798208,
+  "total_params": 502830976,
+  "train_runtime_s_this_session": 1523.232801437378,
+  "train_loss": 0.1470620626801843,
+  "best_checkpoint": "/content/drive/MyDrive/genai_a2/checkpoints/qwen05_lora/checkpoint-100",
+  "best_eval_loss": 0.1455940306186676,
+  "global_steps": 111,
+  "peak_gpu_mem_gb": 6.120054272,
+  "gpu": "Tesla T4",
+  "n_train": 602,
+  "n_val": 206,
+  "train_seq_len": {
+    "min": 281,
+    "max": 663,
+    "mean": 368.43023255813955
+  },
+  "train_truncated": 0,
+  "val_truncated": 0,
+  "train_gold_evidence_lost": 0,
+  "val_gold_evidence_lost": 0
+}
