@@ -1,0 +1,381 @@
+{
+  "model": {
+    "architecture": "Qwen2ForCausalLM",
+    "params": 1543714304,
+    "layers": 28,
+    "hidden": 1536,
+    "heads": 12,
+    "kv_heads": 2,
+    "head_dim": 128,
+    "vocab": 151936,
+    "max_position_embeddings": 32768,
+    "rope_theta": 1000000.0,
+    "tie_word_embeddings": true,
+    "kv_cache_bytes_per_token": 57344,
+    "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "adapter": "/content/drive/MyDrive/genai_a2/checkpoints/qwen15_lora/final_adapter",
+    "dtype": "torch.float32",
+    "device": "cuda"
+  },
+  "gpu": "Tesla T4",
+  "torch": "2.14.1+cu130",
+  "correctness": [
+    {
+      "case": "real_prompt_eos",
+      "input_len": 370,
+      "max_new": 64,
+      "ignore_eos": false,
+      "n_generated": 13,
+      "text": "{\"evidence\": [], \"label\": \"not excluded\"}<|im_end|>",
+      "agreement": {
+        "hf_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "hf_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        }
+      },
+      "hf_cache_lengths_ok": true
+    },
+    {
+      "case": "L128_N32_forced",
+      "input_len": 128,
+      "max_new": 32,
+      "ignore_eos": true,
+      "n_generated": 32,
+      "text": ".\n2. His mother reports that he has been experiencing a runny nose and mild congestion for the past 3 days.\n3. The patient is alert and",
+      "agreement": {
+        "hf_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "hf_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        }
+      },
+      "hf_cache_lengths_ok": true
+    },
+    {
+      "case": "L512_N32_forced",
+      "input_len": 512,
+      "max_new": 32,
+      "ignore_eos": true,
+      "n_generated": 32,
+      "text": " patient will provide informed consent, and will comply with the trial protocol without any practical issues.\n\nCriterion type: exclusion\nCriterion: Chest tubes\n\nAllowed labels: \"",
+      "agreement": {
+        "hf_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "hf_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        }
+      },
+      "hf_cache_lengths_ok": true
+    }
+  ],
+  "logit_agreement": {
+    "max_abs": 5.340576171875e-05,
+    "mean_abs": 5.558791599469259e-06,
+    "dtype": "torch.float32"
+  },
+  "benchmark": [
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.14632171000084782,
+      "decode_s": 1.054571176000536,
+      "total_s": 1.2008928860013839,
+      "decode_tokens_per_s": 29.395834729304458,
+      "e2e_tokens_per_s": 26.646839508351558,
+      "mode": "hf_cached",
+      "repeats": 1,
+      "all_total_s": [
+        1.2008928860013839
+      ],
+      "peak_mem_bytes": 6270983680,
+      "peak_mem_over_weights_bytes": 86809600,
+      "input_len": 128,
+      "output_len": 32,
+      "path": "hf_cached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.12448042899995926,
+      "decode_s": 1.0146692710004572,
+      "total_s": 1.1391497000004165,
+      "decode_tokens_per_s": 30.551826970609056,
+      "e2e_tokens_per_s": 28.0911279702644,
+      "mode": "manual_cached[torch_sdpa]",
+      "cache_len_final": 159,
+      "cache_bytes_used": 9117696,
+      "cache_bytes_allocated": 9175040,
+      "cache_grow_events": 0,
+      "repeats": 1,
+      "all_total_s": [
+        1.1391497000004165
+      ],
+      "peak_mem_bytes": 6214055424,
+      "peak_mem_over_weights_bytes": 29881344,
+      "input_len": 128,
+      "output_len": 32,
+      "path": "manual_cached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.14470889999938663,
+      "decode_s": 7.420390376999421,
+      "total_s": 7.565099276998808,
+      "decode_tokens_per_s": 4.1776777804155705,
+      "e2e_tokens_per_s": 4.229951098896206,
+      "mode": "hf_uncached",
+      "repeats": 1,
+      "all_total_s": [
+        7.565099276998808
+      ],
+      "peak_mem_bytes": 6378252800,
+      "peak_mem_over_weights_bytes": 194078720,
+      "input_len": 128,
+      "output_len": 32,
+      "path": "hf_uncached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.1253688940014399,
+      "decode_s": 6.272624573999565,
+      "total_s": 6.397993468001005,
+      "decode_tokens_per_s": 4.942109899020102,
+      "e2e_tokens_per_s": 5.001568094754262,
+      "mode": "manual_uncached[torch_sdpa]",
+      "repeats": 1,
+      "all_total_s": [
+        6.397993468001005
+      ],
+      "peak_mem_bytes": 6208599552,
+      "peak_mem_over_weights_bytes": 24425472,
+      "input_len": 128,
+      "output_len": 32,
+      "path": "manual_uncached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.48807553500046197,
+      "decode_s": 1.3254114690007555,
+      "total_s": 1.8134870040012174,
+      "decode_tokens_per_s": 23.38896314468389,
+      "e2e_tokens_per_s": 17.64556345283769,
+      "mode": "hf_cached",
+      "repeats": 1,
+      "all_total_s": [
+        1.8134870040012174
+      ],
+      "peak_mem_bytes": 6531099136,
+      "peak_mem_over_weights_bytes": 346925056,
+      "input_len": 512,
+      "output_len": 32,
+      "path": "hf_cached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.41743445299835,
+      "decode_s": 1.041465654001513,
+      "total_s": 1.458900106999863,
+      "decode_tokens_per_s": 29.765743959862707,
+      "e2e_tokens_per_s": 21.934332478599924,
+      "mode": "manual_cached[torch_sdpa]",
+      "cache_len_final": 543,
+      "cache_bytes_used": 31137792,
+      "cache_bytes_allocated": 31195136,
+      "cache_grow_events": 0,
+      "repeats": 1,
+      "all_total_s": [
+        1.458900106999863
+      ],
+      "peak_mem_bytes": 6296117760,
+      "peak_mem_over_weights_bytes": 111943680,
+      "input_len": 512,
+      "output_len": 32,
+      "path": "manual_cached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.4812972580002679,
+      "decode_s": 19.80857534899951,
+      "total_s": 20.28987260699978,
+      "decode_tokens_per_s": 1.564978775799025,
+      "e2e_tokens_per_s": 1.5771414941738156,
+      "mode": "hf_uncached",
+      "repeats": 1,
+      "all_total_s": [
+        20.28987260699978
+      ],
+      "peak_mem_bytes": 6846917120,
+      "peak_mem_over_weights_bytes": 662743040,
+      "input_len": 512,
+      "output_len": 32,
+      "path": "hf_uncached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.4321638189994701,
+      "decode_s": 17.46427692800171,
+      "total_s": 17.89644074700118,
+      "decode_tokens_per_s": 1.7750520177732356,
+      "e2e_tokens_per_s": 1.788065037756856,
+      "mode": "manual_uncached[torch_sdpa]",
+      "repeats": 1,
+      "all_total_s": [
+        17.89644074700118
+      ],
+      "peak_mem_bytes": 6267735552,
+      "peak_mem_over_weights_bytes": 83561472,
+      "input_len": 512,
+      "output_len": 32,
+      "path": "manual_uncached"
+    }
+  ],
+  "per_step_profile_s": {
+    "cached": [
+      0.037674065000828705,
+      0.0398556029995234,
+      0.04239256899927568,
+      0.04357066900047357,
+      0.035056527000051574,
+      0.0338958009997441,
+      0.03380228900095972,
+      0.034164286000304855,
+      0.033752073999494314,
+      0.03444935299921781,
+      0.03354406200014637,
+      0.033647383001152775,
+      0.03368590499849233,
+      0.03368518900060735,
+      0.035252412999398075,
+      0.0337230310015002,
+      0.03331327399973816,
+      0.033536053999341675,
+      0.033518924999953015,
+      0.03656411600059073,
+      0.05284544599999208,
+      0.05914761299936799,
+      0.05291524099993694,
+      0.04835786300100153,
+      0.046566166000047815,
+      0.04402697599834937,
+      0.04657491500074684,
+      0.043977913999697194,
+      0.041196541000317666,
+      0.04379995099952794,
+      0.04152213300039875,
+      0.04169147500033432,
+      0.04018355500011239,
+      0.04038187399964954,
+      0.040286777999426704,
+      0.0433757560003869,
+      0.04083073900073941,
+      0.04029803999947035,
+      0.03985242300041136,
+      0.039191447000121116,
+      0.03964841599918145,
+      0.03951932800009672,
+      0.04676378200019826,
+      0.04307642999992822,
+      0.05672316399977717,
+      0.051738661000854336,
+      0.045394459999442915
+    ],
+    "uncached": [
+      0.637313653000092,
+      0.6443306100009067,
+      0.6429129449988977,
+      0.6448379760004173,
+      0.6435333490007906,
+      0.6451643959990179,
+      0.6426176189997932,
+      0.6429336150013114,
+      0.6435655059995042,
+      0.6441473220002081,
+      0.6428986270002497,
+      0.6438651079988631,
+      0.6442775890009216,
+      0.6432303820001835,
+      0.6424612639984844,
+      0.6448023600005399,
+      0.6441956609996851,
+      0.6432536820011592,
+      0.6432245119995059,
+      0.6445098599997436,
+      0.6438861650003673,
+      0.6443901820002793,
+      0.6428917670000374,
+      0.6449173540004267,
+      0.6431347519992414,
+      0.6450767509995785,
+      0.6438303409995569,
+      0.6419798639999499,
+      0.6450062029998662,
+      0.6426330050016986,
+      0.6444606019995263,
+      0.6453251459988678,
+      0.6433479820007051,
+      0.643272657000125,
+      0.6440369289994123,
+      0.6446916460008651,
+      0.6440917589989112,
+      0.6444826930001,
+      0.6449318330014648,
+      0.6435266849985055,
+      0.6467064620010206,
+      0.6425630260000617,
+      0.6453739219996351,
+      0.6409855509991758,
+      0.675861657000496,
+      0.6764220090008166,
+      0.6445856150003237
+    ]
+  },
+  "notes": {
+    "timing": "median of repeats after 1 warm-up; torch.cuda.synchronize around every timed step",
+    "decode_tokens_per_s": "(N-1)/decode_s; first token is produced by prefill",
+    "forced_length": "ignore_eos=True so every path generates exactly N tokens"
+  }
+}
