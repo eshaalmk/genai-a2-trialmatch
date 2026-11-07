@@ -56,27 +56,28 @@ def tiled_attention(q, k, v, causal: bool = True, q_offset: int = 0,
     B, H, Tq, D = q.shape
     Tk = k.shape[-2]
     scale = scale if scale is not None else 1.0 / math.sqrt(D)
-    out = torch.empty((B, H, Tq, D), dtype=torch.float32, device=q.device)
+    acc_dtype = torch.float64 if q.dtype == torch.float64 else torch.float32
+    out = torch.empty((B, H, Tq, D), dtype=acc_dtype, device=q.device)
     blocks_done = blocks_skipped = 0
     for qs in range(0, Tq, block_q):
         qe = min(qs + block_q, Tq)
-        qb = q[:, :, qs:qe].float() * scale
+        qb = q[:, :, qs:qe].to(acc_dtype) * scale
         nq = qe - qs
-        m = torch.full((B, H, nq, 1), float("-inf"), device=q.device)
-        l = torch.zeros((B, H, nq, 1), device=q.device)
-        acc = torch.zeros((B, H, nq, D), device=q.device)
+        m = torch.full((B, H, nq, 1), float("-inf"), device=q.device, dtype=acc_dtype)
+        l = torch.zeros((B, H, nq, 1), device=q.device, dtype=acc_dtype)
+        acc = torch.zeros((B, H, nq, D), device=q.device, dtype=acc_dtype)
         q_first_abs, q_last_abs = q_offset + qs, q_offset + qe - 1
         for ks in range(0, Tk, block_k):
             ke = min(ks + block_k, Tk)
             if causal and ks > q_last_abs:          # whole key block is in the future
                 blocks_skipped += (Tk - ks + block_k - 1) // block_k
                 break
-            kb = k[:, :, ks:ke].float()
-            vb = v[:, :, ks:ke].float()
+            kb = k[:, :, ks:ke].to(acc_dtype)
+            vb = v[:, :, ks:ke].to(acc_dtype)
             s = torch.matmul(qb, kb.transpose(-1, -2))                     # [B,H,nq,nk]
             if causal and (ke - 1) > q_first_abs:     # diagonal block: partially masked
-                qpos = torch.arange(qs, qe, device=q.device) + q_offset
-                kpos = torch.arange(ks, ke, device=q.device)
+                qpos = torch.arange(qs, qe, device=q.device, dtype=acc_dtype) + q_offset
+                kpos = torch.arange(ks, ke, device=q.device, dtype=acc_dtype)
                 s = s.masked_fill(kpos[None, :] > qpos[:, None], float("-inf"))
             m_new = torch.maximum(m, s.amax(dim=-1, keepdim=True))
             m_safe = torch.where(torch.isfinite(m_new), m_new, torch.zeros_like(m_new))
