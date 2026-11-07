@@ -1,0 +1,45 @@
+{
+  "rows": [
+    {
+      "model": "base",
+      "split": "val",
+      "n": 206,
+      "accuracy": 0.2961165048543689,
+      "macro_f1": 0.19144953578915844,
+      "incl_acc": 0.5606060606060606,
+      "incl_macro_f1": 0.289010989010989,
+      "excl_acc": 0.17142857142857143,
+      "excl_macro_f1": 0.12244897959183673,
+      "evid_micro_p": 0.1111111111111111,
+      "evid_micro_r": 0.1565217391304348,
+      "evid_micro_f1": 0.1299638989169675,
+      "evid_macro_f1": 0.10965608465608465,
+      "invalid_rate": 0.0,
+      "json_valid_rate": 1.0
+    },
+    {
+      "model": "finetuned",
+      "split": "val",
+      "n": 206,
+      "accuracy": 0.7233009708737864,
+      "macro_f1": 0.3533401338801296,
+      "incl_acc": 0.7272727272727273,
+      "incl_macro_f1": 0.37435771959872766,
+      "excl_acc": 0.7214285714285714,
+      "excl_macro_f1": 0.2095435684647303,
+      "evid_micro_p": 0.703125,
+      "evid_micro_r": 0.391304347826087,
+      "evid_micro_f1": 0.5027932960893855,
+      "evid_macro_f1": 0.41468253968253965,
+      "invalid_rate": 0.0,
+      "json_valid_rate": 1.0
+    }
+  ],
+  "flips": {
+    "val": {
+      "n_common": 206,
+      "fixed_by_finetuning": 115,
+      "broken_by_finetuning": 27
+    }
+  }
+}
