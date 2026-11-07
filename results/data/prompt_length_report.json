@@ -1,0 +1,26 @@
+{
+  "train": {
+    "prompt_tokens_min": 267,
+    "prompt_tokens_max": 637,
+    "prompt_tokens_mean": 353.6129568106312,
+    "budget": 1792,
+    "truncated_examples": 0,
+    "examples_losing_gold_evidence": 0
+  },
+  "val": {
+    "prompt_tokens_min": 307,
+    "prompt_tokens_max": 475,
+    "prompt_tokens_mean": 366.81067961165047,
+    "budget": 1792,
+    "truncated_examples": 0,
+    "examples_losing_gold_evidence": 0
+  },
+  "test": {
+    "prompt_tokens_min": 278,
+    "prompt_tokens_max": 541,
+    "prompt_tokens_mean": 337.0873786407767,
+    "budget": 1792,
+    "truncated_examples": 0,
+    "examples_losing_gold_evidence": 0
+  }
+}

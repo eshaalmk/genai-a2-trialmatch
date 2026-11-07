@@ -1,0 +1,242 @@
+{
+  "dataset": "ncbi/TrialGPT-Criterion-Annotations",
+  "seed": 42,
+  "procedure": "sorted unique patient_id -> numpy.random.default_rng(42).shuffle -> first 37 train, next 8 val, last 8 test",
+  "splits": {
+    "train": {
+      "patient_ids": [
+        "sigir-20148",
+        "sigir-201416",
+        "sigir-201517",
+        "sigir-201519",
+        "sigir-20159",
+        "sigir-201425",
+        "sigir-201414",
+        "sigir-20157",
+        "sigir-201514",
+        "sigir-20144",
+        "sigir-20152",
+        "sigir-20151",
+        "sigir-201429",
+        "sigir-201426",
+        "sigir-20145",
+        "sigir-201518",
+        "sigir-20154",
+        "sigir-201521",
+        "sigir-201413",
+        "sigir-20146",
+        "sigir-201511",
+        "sigir-20147",
+        "sigir-20155",
+        "sigir-201418",
+        "sigir-20156",
+        "sigir-20143",
+        "sigir-20149",
+        "sigir-201523",
+        "sigir-201424",
+        "sigir-201524",
+        "sigir-201512",
+        "sigir-201423",
+        "sigir-201412",
+        "sigir-201510",
+        "sigir-201419",
+        "sigir-201520",
+        "sigir-20153"
+      ],
+      "n_patients": 37,
+      "n_annotations": 602,
+      "n_trials": 72,
+      "annotations_per_patient": {
+        "sigir-20148": 12,
+        "sigir-201416": 30,
+        "sigir-201517": 15,
+        "sigir-201519": 6,
+        "sigir-20159": 6,
+        "sigir-201425": 21,
+        "sigir-201414": 14,
+        "sigir-20157": 18,
+        "sigir-201514": 15,
+        "sigir-20144": 43,
+        "sigir-20152": 20,
+        "sigir-20151": 29,
+        "sigir-201429": 22,
+        "sigir-201426": 18,
+        "sigir-20145": 11,
+        "sigir-201518": 10,
+        "sigir-20154": 11,
+        "sigir-201521": 21,
+        "sigir-201413": 12,
+        "sigir-20146": 22,
+        "sigir-201511": 11,
+        "sigir-20147": 17,
+        "sigir-20155": 5,
+        "sigir-201418": 12,
+        "sigir-20156": 9,
+        "sigir-20143": 6,
+        "sigir-20149": 5,
+        "sigir-201523": 25,
+        "sigir-201424": 6,
+        "sigir-201524": 32,
+        "sigir-201512": 9,
+        "sigir-201423": 23,
+        "sigir-201412": 9,
+        "sigir-201510": 15,
+        "sigir-201419": 25,
+        "sigir-201520": 21,
+        "sigir-20153": 16
+      },
+      "by_criterion_type": {
+        "inclusion": 215,
+        "exclusion": 387
+      },
+      "label_counts": {
+        "not enough information": 174,
+        "not excluded": 291,
+        "not included": 13,
+        "included": 88,
+        "not applicable": 28,
+        "excluded": 8
+      },
+      "label_counts_by_type": {
+        "inclusion": {
+          "not enough information": 109,
+          "not included": 13,
+          "included": 88,
+          "not applicable": 5
+        },
+        "exclusion": {
+          "not excluded": 291,
+          "not enough information": 65,
+          "not applicable": 23,
+          "excluded": 8
+        }
+      },
+      "empty_gold_evidence": 348
+    },
+    "val": {
+      "patient_ids": [
+        "sigir-201415",
+        "sigir-20142",
+        "sigir-201430",
+        "sigir-201427",
+        "sigir-201515",
+        "sigir-20141",
+        "sigir-201420",
+        "sigir-201522"
+      ],
+      "n_patients": 8,
+      "n_annotations": 206,
+      "n_trials": 16,
+      "annotations_per_patient": {
+        "sigir-201415": 39,
+        "sigir-20142": 12,
+        "sigir-201430": 29,
+        "sigir-201427": 20,
+        "sigir-201515": 29,
+        "sigir-20141": 31,
+        "sigir-201420": 17,
+        "sigir-201522": 29
+      },
+      "by_criterion_type": {
+        "inclusion": 66,
+        "exclusion": 140
+      },
+      "label_counts": {
+        "not enough information": 53,
+        "included": 35,
+        "not excluded": 101,
+        "not applicable": 12,
+        "not included": 3,
+        "excluded": 2
+      },
+      "label_counts_by_type": {
+        "inclusion": {
+          "not enough information": 27,
+          "included": 35,
+          "not included": 3,
+          "not applicable": 1
+        },
+        "exclusion": {
+          "not excluded": 101,
+          "not enough information": 26,
+          "not applicable": 11,
+          "excluded": 2
+        }
+      },
+      "empty_gold_evidence": 116
+    },
+    "test": {
+      "patient_ids": [
+        "sigir-201422",
+        "sigir-20158",
+        "sigir-201411",
+        "sigir-201516",
+        "sigir-201513",
+        "sigir-201410",
+        "sigir-201421",
+        "sigir-201417"
+      ],
+      "n_patients": 8,
+      "n_annotations": 206,
+      "n_trials": 16,
+      "annotations_per_patient": {
+        "sigir-201422": 16,
+        "sigir-20158": 22,
+        "sigir-201411": 15,
+        "sigir-201516": 28,
+        "sigir-201513": 42,
+        "sigir-201410": 26,
+        "sigir-201421": 34,
+        "sigir-201417": 23
+      },
+      "by_criterion_type": {
+        "inclusion": 75,
+        "exclusion": 131
+      },
+      "label_counts": {
+        "included": 27,
+        "not included": 7,
+        "not applicable": 15,
+        "not excluded": 91,
+        "not enough information": 66
+      },
+      "label_counts_by_type": {
+        "inclusion": {
+          "included": 27,
+          "not included": 7,
+          "not enough information": 38,
+          "not applicable": 3
+        },
+        "exclusion": {
+          "not applicable": 12,
+          "not excluded": 91,
+          "not enough information": 28
+        }
+      },
+      "empty_gold_evidence": 145
+    }
+  },
+  "leakage_checks": {
+    "train_val_overlap": [],
+    "train_test_overlap": [],
+    "val_test_overlap": [],
+    "unassigned_rows": 0,
+    "patients_in_multiple_splits": [],
+    "identical_notes_across_splits": 0,
+    "identical_note_criterion_pairs_across_splits": 0,
+    "passed": true
+  },
+  "cleaning": {
+    "rows_raw": 1015,
+    "dropped_gpt4_columns": [
+      "gpt4_explanation",
+      "explanation_correctness",
+      "gpt4_sentences",
+      "gpt4_eligibility"
+    ],
+    "rows_dropped_empty_criterion": 1,
+    "rows_label_inconsistent_with_type": 0,
+    "rows_evidence_id_out_of_range": 0,
+    "rows_clean": 1014
+  }
+}
