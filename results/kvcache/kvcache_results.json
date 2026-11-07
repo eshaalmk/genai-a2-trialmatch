@@ -1,0 +1,897 @@
+{
+  "model": {
+    "architecture": "Qwen2ForCausalLM",
+    "params": 1543714304,
+    "layers": 28,
+    "hidden": 1536,
+    "heads": 12,
+    "kv_heads": 2,
+    "head_dim": 128,
+    "vocab": 151936,
+    "max_position_embeddings": 32768,
+    "rope_theta": 1000000.0,
+    "tie_word_embeddings": true,
+    "kv_cache_bytes_per_token": 28672,
+    "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "adapter": "/content/drive/MyDrive/genai_a2/checkpoints/qwen15_lora/final_adapter",
+    "dtype": "torch.bfloat16",
+    "device": "cuda"
+  },
+  "gpu": "Tesla T4",
+  "torch": "2.14.1+cu130",
+  "correctness": [
+    {
+      "case": "real_prompt_eos",
+      "input_len": 370,
+      "max_new": 64,
+      "ignore_eos": false,
+      "n_generated": 13,
+      "text": "{\"evidence\": [], \"label\": \"not excluded\"}<|im_end|>",
+      "agreement": {
+        "hf_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "hf_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        }
+      },
+      "hf_cache_lengths_ok": true
+    },
+    {
+      "case": "L128_N32_forced",
+      "input_len": 128,
+      "max_new": 32,
+      "ignore_eos": true,
+      "n_generated": 32,
+      "text": ".\n2. His mother reports that he has been experiencing a runny nose and mild congestion for the past 3 days.\n3. He has been taking over",
+      "agreement": {
+        "hf_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "hf_cached": {
+          "equal": false,
+          "first_mismatch": 27,
+          "matching_prefix_frac": 0.84375,
+          "investigation": {
+            "position": 27,
+            "ref_token": 1260,
+            "other_token": 576,
+            "top1_logit": 22.0,
+            "top2_logit": 21.875,
+            "margin": 0.125,
+            "logit_ref_token": 22.0,
+            "logit_other_token": 21.875
+          }
+        },
+        "manual_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_cached": {
+          "equal": false,
+          "first_mismatch": 27,
+          "matching_prefix_frac": 0.84375,
+          "investigation": {
+            "position": 27,
+            "ref_token": 1260,
+            "other_token": 576,
+            "top1_logit": 22.0,
+            "top2_logit": 21.875,
+            "margin": 0.125,
+            "logit_ref_token": 22.0,
+            "logit_other_token": 21.875
+          }
+        }
+      },
+      "hf_cache_lengths_ok": true
+    },
+    {
+      "case": "L128_N96_forced",
+      "input_len": 128,
+      "max_new": 96,
+      "ignore_eos": true,
+      "n_generated": 96,
+      "text": ".\n2. His mother reports that he has been experiencing a runny nose and mild congestion for the past 3 days.\n3. He has been taking over-the-counter cough syrup and ibuprofen for the past 2 days.\n4. His",
+      "agreement": {
+        "hf_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "hf_cached": {
+          "equal": false,
+          "first_mismatch": 27,
+          "matching_prefix_frac": 0.28125,
+          "investigation": {
+            "position": 27,
+            "ref_token": 1260,
+            "other_token": 576,
+            "top1_logit": 22.0,
+            "top2_logit": 21.875,
+            "margin": 0.125,
+            "logit_ref_token": 22.0,
+            "logit_other_token": 21.875
+          }
+        },
+        "manual_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_cached": {
+          "equal": false,
+          "first_mismatch": 27,
+          "matching_prefix_frac": 0.28125,
+          "investigation": {
+            "position": 27,
+            "ref_token": 1260,
+            "other_token": 576,
+            "top1_logit": 22.0,
+            "top2_logit": 21.875,
+            "margin": 0.125,
+            "logit_ref_token": 22.0,
+            "logit_other_token": 21.875
+          }
+        }
+      },
+      "hf_cache_lengths_ok": true
+    },
+    {
+      "case": "L512_N32_forced",
+      "input_len": 512,
+      "max_new": 32,
+      "ignore_eos": true,
+      "n_generated": 32,
+      "text": " patient will provide informed consent, and will comply with the trial protocol without any practical issues.\n\nCriterion type: exclusion\nCriterion: Chest tubes\n\nAllowed labels: \"",
+      "agreement": {
+        "hf_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "hf_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        }
+      },
+      "hf_cache_lengths_ok": true
+    },
+    {
+      "case": "L512_N96_forced",
+      "input_len": 512,
+      "max_new": 96,
+      "ignore_eos": true,
+      "n_generated": 96,
+      "text": " patient will provide informed consent, and will comply with the trial protocol without any practical issues.\n\nCriterion type: exclusion\nCriterion: Chest tubes\n\nAllowed labels: \"excluded\" = the note s",
+      "agreement": {
+        "hf_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "hf_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        }
+      },
+      "hf_cache_lengths_ok": true
+    },
+    {
+      "case": "L1024_N32_forced",
+      "input_len": 1024,
+      "max_new": 32,
+      "ignore_eos": true,
+      "n_generated": 32,
+      "text": " eligibility or ineligibility. Answer with a single JSON object and nothing else.<|im_end|>\n<|endoftext|>Human: Can you provide a summary of the patient's symptoms and",
+      "agreement": {
+        "hf_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "hf_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        }
+      },
+      "hf_cache_lengths_ok": true
+    },
+    {
+      "case": "L1024_N96_forced",
+      "input_len": 1024,
+      "max_new": 96,
+      "ignore_eos": true,
+      "n_generated": 96,
+      "text": " eligibility or ineligibility. Answer with a single JSON object and nothing else.<|im_end|>\n<|endoftext|>Human: Can you provide a summary of the patient's symptoms and condition based on the note?<|im",
+      "agreement": {
+        "hf_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "hf_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_uncached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        },
+        "manual_cached": {
+          "equal": true,
+          "first_mismatch": null,
+          "matching_prefix_frac": 1.0
+        }
+      },
+      "hf_cache_lengths_ok": true
+    }
+  ],
+  "logit_agreement": {
+    "max_abs": 0.3125,
+    "mean_abs": 0.031838707625865936,
+    "dtype": "torch.bfloat16"
+  },
+  "benchmark": [
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.1780153949985106,
+      "decode_s": 1.3185503510012495,
+      "total_s": 1.4994866690012714,
+      "decode_tokens_per_s": 23.510668346081705,
+      "e2e_tokens_per_s": 21.340636540179116,
+      "mode": "hf_cached",
+      "repeats": 3,
+      "all_total_s": [
+        1.6455672859992774,
+        1.4763783359994704,
+        1.4994866690012714
+      ],
+      "peak_mem_bytes": 3143634944,
+      "peak_mem_over_weights_bytes": 46750208,
+      "input_len": 128,
+      "output_len": 32,
+      "path": "hf_cached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.1586561010008154,
+      "decode_s": 1.2187537949994294,
+      "total_s": 1.3774098960002448,
+      "decode_tokens_per_s": 25.43581823268457,
+      "e2e_tokens_per_s": 23.23200965298881,
+      "mode": "manual_cached[torch_sdpa]",
+      "cache_len_final": 159,
+      "cache_bytes_used": 4558848,
+      "cache_bytes_allocated": 4587520,
+      "cache_grow_events": 0,
+      "repeats": 3,
+      "all_total_s": [
+        1.418428089000372,
+        1.3723645490008494,
+        1.3774098960002448
+      ],
+      "peak_mem_bytes": 3111303680,
+      "peak_mem_over_weights_bytes": 14418944,
+      "input_len": 128,
+      "output_len": 32,
+      "path": "manual_cached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.18981709000036062,
+      "decode_s": 7.9764036950000445,
+      "total_s": 8.166220785000405,
+      "decode_tokens_per_s": 3.886463271590948,
+      "e2e_tokens_per_s": 3.9185812926803463,
+      "mode": "hf_uncached",
+      "repeats": 3,
+      "all_total_s": [
+        8.17344260199934,
+        8.166220785000405,
+        8.163475667999592
+      ],
+      "peak_mem_bytes": 3193925120,
+      "peak_mem_over_weights_bytes": 97040384,
+      "input_len": 128,
+      "output_len": 32,
+      "path": "hf_uncached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.16804563799996686,
+      "decode_s": 6.799988789000054,
+      "total_s": 6.9647294280002825,
+      "decode_tokens_per_s": 4.558831045449207,
+      "e2e_tokens_per_s": 4.594579061657512,
+      "mode": "manual_uncached[torch_sdpa]",
+      "repeats": 3,
+      "all_total_s": [
+        6.963215269999637,
+        6.9647294280002825,
+        6.968538687000546
+      ],
+      "peak_mem_bytes": 3109099520,
+      "peak_mem_over_weights_bytes": 12214784,
+      "input_len": 128,
+      "output_len": 32,
+      "path": "manual_uncached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 0.17673207500047283,
+      "decode_s": 3.987533653000355,
+      "total_s": 4.1648125409992645,
+      "decode_tokens_per_s": 23.82425034294539,
+      "e2e_tokens_per_s": 23.050257137615777,
+      "mode": "hf_cached",
+      "repeats": 3,
+      "all_total_s": [
+        4.13874322599986,
+        4.958419263999531,
+        4.1648125409992645
+      ],
+      "peak_mem_bytes": 3143634944,
+      "peak_mem_over_weights_bytes": 46750208,
+      "input_len": 128,
+      "output_len": 96,
+      "path": "hf_cached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 0.15829157100051816,
+      "decode_s": 4.20109641199997,
+      "total_s": 4.358696919000067,
+      "decode_tokens_per_s": 22.613144446921748,
+      "e2e_tokens_per_s": 22.02493125445929,
+      "mode": "manual_cached[torch_sdpa]",
+      "cache_len_final": 223,
+      "cache_bytes_used": 6393856,
+      "cache_bytes_allocated": 6422528,
+      "cache_grow_events": 0,
+      "repeats": 3,
+      "all_total_s": [
+        4.459845203000441,
+        4.358696919000067,
+        3.843120423000073
+      ],
+      "peak_mem_bytes": 3113138688,
+      "peak_mem_over_weights_bytes": 16253952,
+      "input_len": 128,
+      "output_len": 96,
+      "path": "manual_cached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 0.19166879600015818,
+      "decode_s": 27.473670176999804,
+      "total_s": 27.66533897299996,
+      "decode_tokens_per_s": 3.4578561723992514,
+      "e2e_tokens_per_s": 3.4700460418609502,
+      "mode": "hf_uncached",
+      "repeats": 3,
+      "all_total_s": [
+        27.601809536001383,
+        27.66533897299996,
+        27.697291116999622
+      ],
+      "peak_mem_bytes": 3232795136,
+      "peak_mem_over_weights_bytes": 135910400,
+      "input_len": 128,
+      "output_len": 96,
+      "path": "hf_uncached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 0.16625326200119162,
+      "decode_s": 23.523355481998806,
+      "total_s": 23.689608743999997,
+      "decode_tokens_per_s": 4.038539487816631,
+      "e2e_tokens_per_s": 4.052409688881606,
+      "mode": "manual_uncached[torch_sdpa]",
+      "repeats": 3,
+      "all_total_s": [
+        23.65817150100156,
+        23.689608743999997,
+        23.696891031000632
+      ],
+      "peak_mem_bytes": 3115623936,
+      "peak_mem_over_weights_bytes": 18739200,
+      "input_len": 128,
+      "output_len": 96,
+      "path": "manual_uncached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.7059461180015205,
+      "decode_s": 1.290728621001108,
+      "total_s": 1.9968527940000058,
+      "decode_tokens_per_s": 24.01744216065802,
+      "e2e_tokens_per_s": 16.025217330066198,
+      "mode": "hf_cached",
+      "repeats": 3,
+      "all_total_s": [
+        1.9968527940000058,
+        1.9870957019993511,
+        2.00356683300015
+      ],
+      "peak_mem_bytes": 3280227328,
+      "peak_mem_over_weights_bytes": 183342592,
+      "input_len": 512,
+      "output_len": 32,
+      "path": "hf_cached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.5942249350009661,
+      "decode_s": 1.231571389000237,
+      "total_s": 1.8257963240012032,
+      "decode_tokens_per_s": 25.171094649385388,
+      "e2e_tokens_per_s": 17.526598985516916,
+      "mode": "manual_cached[torch_sdpa]",
+      "cache_len_final": 543,
+      "cache_bytes_used": 15568896,
+      "cache_bytes_allocated": 15597568,
+      "cache_grow_events": 0,
+      "repeats": 3,
+      "all_total_s": [
+        2.16880112599938,
+        1.8207282229996054,
+        1.8257963240012032
+      ],
+      "peak_mem_bytes": 3166232576,
+      "peak_mem_over_weights_bytes": 69347840,
+      "input_len": 512,
+      "output_len": 32,
+      "path": "manual_cached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.7089521500001865,
+      "decode_s": 24.729003454998747,
+      "total_s": 25.437955604998933,
+      "decode_tokens_per_s": 1.253588728571819,
+      "e2e_tokens_per_s": 1.2579627269147182,
+      "mode": "hf_uncached",
+      "repeats": 3,
+      "all_total_s": [
+        25.322897316000308,
+        25.437955604998933,
+        25.453575068000646
+      ],
+      "peak_mem_bytes": 3430074368,
+      "peak_mem_over_weights_bytes": 333189632,
+      "input_len": 512,
+      "output_len": 32,
+      "path": "hf_uncached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 0.6014730129991221,
+      "decode_s": 21.01702985600059,
+      "total_s": 21.618502868999713,
+      "decode_tokens_per_s": 1.4749943361359008,
+      "e2e_tokens_per_s": 1.4802135094140605,
+      "mode": "manual_uncached[torch_sdpa]",
+      "repeats": 3,
+      "all_total_s": [
+        21.623682694998934,
+        21.618502868999713,
+        21.613744948999738
+      ],
+      "peak_mem_bytes": 3156297216,
+      "peak_mem_over_weights_bytes": 59412480,
+      "input_len": 512,
+      "output_len": 32,
+      "path": "manual_uncached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 0.6971628100000089,
+      "decode_s": 4.268251852001413,
+      "total_s": 4.970221491001212,
+      "decode_tokens_per_s": 22.257355773290147,
+      "e2e_tokens_per_s": 19.315034586247698,
+      "mode": "hf_cached",
+      "repeats": 3,
+      "all_total_s": [
+        4.678863552000621,
+        4.970221491001212,
+        5.310224853999898
+      ],
+      "peak_mem_bytes": 3280227328,
+      "peak_mem_over_weights_bytes": 183342592,
+      "input_len": 512,
+      "output_len": 96,
+      "path": "hf_cached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 0.5955626260001736,
+      "decode_s": 3.9807483269996737,
+      "total_s": 4.576310952999847,
+      "decode_tokens_per_s": 23.864859618392998,
+      "e2e_tokens_per_s": 20.977595488145404,
+      "mode": "manual_cached[torch_sdpa]",
+      "cache_len_final": 607,
+      "cache_bytes_used": 17403904,
+      "cache_bytes_allocated": 17432576,
+      "cache_grow_events": 0,
+      "repeats": 3,
+      "all_total_s": [
+        4.576310952999847,
+        4.893847391000236,
+        4.3793661479994626
+      ],
+      "peak_mem_bytes": 3168067584,
+      "peak_mem_over_weights_bytes": 71182848,
+      "input_len": 512,
+      "output_len": 96,
+      "path": "manual_cached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 0.7007154780003475,
+      "decode_s": 78.23650633299985,
+      "total_s": 78.9372218110002,
+      "decode_tokens_per_s": 1.2142668998491484,
+      "e2e_tokens_per_s": 1.216156304941328,
+      "mode": "hf_uncached",
+      "repeats": 3,
+      "all_total_s": [
+        78.9372218110002,
+        78.82418147899989,
+        78.99799486699885
+      ],
+      "peak_mem_bytes": 3468085760,
+      "peak_mem_over_weights_bytes": 371201024,
+      "input_len": 512,
+      "output_len": 96,
+      "path": "hf_uncached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 0.6035751059989707,
+      "decode_s": 66.54372069700003,
+      "total_s": 67.14901284400003,
+      "decode_tokens_per_s": 1.4276328255309425,
+      "e2e_tokens_per_s": 1.4296561622287185,
+      "mode": "manual_uncached[torch_sdpa]",
+      "repeats": 3,
+      "all_total_s": [
+        67.0197178920007,
+        67.2894194569999,
+        67.14901284400003
+      ],
+      "peak_mem_bytes": 3166965248,
+      "peak_mem_over_weights_bytes": 70080512,
+      "input_len": 512,
+      "output_len": 96,
+      "path": "manual_uncached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 1.482376875999762,
+      "decode_s": 1.3076305470003717,
+      "total_s": 2.7874801629986905,
+      "decode_tokens_per_s": 23.70700200535403,
+      "e2e_tokens_per_s": 11.47990232352912,
+      "mode": "hf_cached",
+      "repeats": 3,
+      "all_total_s": [
+        2.7874801629986905,
+        2.7803513430008024,
+        3.0718685620013275
+      ],
+      "peak_mem_bytes": 3462714368,
+      "peak_mem_over_weights_bytes": 365829632,
+      "input_len": 1024,
+      "output_len": 32,
+      "path": "hf_cached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 1.2692023330000666,
+      "decode_s": 1.2369510360003915,
+      "total_s": 2.506153369000458,
+      "decode_tokens_per_s": 25.06162256853487,
+      "e2e_tokens_per_s": 12.768572105689893,
+      "mode": "manual_cached[torch_sdpa]",
+      "cache_len_final": 1055,
+      "cache_bytes_used": 30248960,
+      "cache_bytes_allocated": 30277632,
+      "cache_grow_events": 0,
+      "repeats": 3,
+      "all_total_s": [
+        2.497599681999418,
+        2.506153369000458,
+        2.5199570179993316
+      ],
+      "peak_mem_bytes": 3291285504,
+      "peak_mem_over_weights_bytes": 194400768,
+      "input_len": 1024,
+      "output_len": 32,
+      "path": "manual_cached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 1.488272100001268,
+      "decode_s": 49.22087595999983,
+      "total_s": 50.7049558460003,
+      "decode_tokens_per_s": 0.6298140655845432,
+      "e2e_tokens_per_s": 0.6311020188478128,
+      "mode": "hf_uncached",
+      "repeats": 3,
+      "all_total_s": [
+        50.7049558460003,
+        50.7825269570003,
+        50.3932475900001
+      ],
+      "peak_mem_bytes": 3741862912,
+      "peak_mem_over_weights_bytes": 644978176,
+      "input_len": 1024,
+      "output_len": 32,
+      "path": "hf_uncached"
+    },
+    {
+      "n_new_tokens": 32,
+      "prefill_s": 1.2734791669990955,
+      "decode_s": 42.06273195800168,
+      "total_s": 43.336647650001396,
+      "decode_tokens_per_s": 0.7369944498838671,
+      "e2e_tokens_per_s": 0.7384050621183424,
+      "mode": "manual_uncached[torch_sdpa]",
+      "repeats": 3,
+      "all_total_s": [
+        43.30317526100043,
+        43.336647650001396,
+        43.34526878199904
+      ],
+      "peak_mem_bytes": 3268884480,
+      "peak_mem_over_weights_bytes": 171999744,
+      "input_len": 1024,
+      "output_len": 32,
+      "path": "manual_uncached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 1.488445581000633,
+      "decode_s": 4.771780191998914,
+      "total_s": 6.260053308998977,
+      "decode_tokens_per_s": 19.9087125092835,
+      "e2e_tokens_per_s": 15.335332665937157,
+      "mode": "hf_cached",
+      "repeats": 3,
+      "all_total_s": [
+        6.260053308998977,
+        5.673228605000986,
+        6.484020628000508
+      ],
+      "peak_mem_bytes": 3462714368,
+      "peak_mem_over_weights_bytes": 365829632,
+      "input_len": 1024,
+      "output_len": 96,
+      "path": "hf_cached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 1.2683374379994348,
+      "decode_s": 4.052814014999967,
+      "total_s": 5.323218341998654,
+      "decode_tokens_per_s": 23.44050322773096,
+      "e2e_tokens_per_s": 18.034202963757423,
+      "mode": "manual_cached[torch_sdpa]",
+      "cache_len_final": 1119,
+      "cache_bytes_used": 32083968,
+      "cache_bytes_allocated": 32112640,
+      "cache_grow_events": 0,
+      "repeats": 3,
+      "all_total_s": [
+        5.323218341998654,
+        5.617539971999577,
+        5.023287255000469
+      ],
+      "peak_mem_bytes": 3293120512,
+      "peak_mem_over_weights_bytes": 196235776,
+      "input_len": 1024,
+      "output_len": 96,
+      "path": "manual_cached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 1.4898271290003322,
+      "decode_s": 153.60058968700105,
+      "total_s": 155.09041681600138,
+      "decode_tokens_per_s": 0.6184872088940925,
+      "e2e_tokens_per_s": 0.6189937584208959,
+      "mode": "hf_uncached",
+      "repeats": 3,
+      "all_total_s": [
+        154.8855706200011,
+        155.15250495299915,
+        155.09041681600138
+      ],
+      "peak_mem_bytes": 3780103168,
+      "peak_mem_over_weights_bytes": 683218432,
+      "input_len": 1024,
+      "output_len": 96,
+      "path": "hf_uncached"
+    },
+    {
+      "n_new_tokens": 96,
+      "prefill_s": 1.2738488420000067,
+      "decode_s": 131.35838603600132,
+      "total_s": 132.62808207600028,
+      "decode_tokens_per_s": 0.7232122962744335,
+      "e2e_tokens_per_s": 0.7238286077679147,
+      "mode": "manual_uncached[torch_sdpa]",
+      "repeats": 3,
+      "all_total_s": [
+        132.62808207600028,
+        132.62618735700016,
+        132.69473481099885
+      ],
+      "peak_mem_bytes": 3290061312,
+      "peak_mem_over_weights_bytes": 193176576,
+      "input_len": 1024,
+      "output_len": 96,
+      "path": "manual_uncached"
+    }
+  ],
+  "per_step_profile_s": {
+    "cached": [
+      0.0437104630000249,
+      0.04077808100009861,
+      0.04011822499887785,
+      0.0397059420010919,
+      0.041195582000000286,
+      0.040646085999469506,
+      0.05469504299981054,
+      0.040810168000462,
+      0.04066900999896461,
+      0.04137085799993656,
+      0.04601466799977061,
+      0.042235461000018404,
+      0.041003532000104315,
+      0.04128048300117371,
+      0.04072897399964859,
+      0.04433857599906332,
+      0.0412042960015242,
+      0.04065552899919567,
+      0.041649898999821744,
+      0.040835186000549584,
+      0.04006548299912538,
+      0.040325984000446624,
+      0.04043052599990915,
+      0.040822079999998095,
+      0.04046666500107676,
+      0.04071998699873802,
+      0.04184443200028909,
+      0.040037992999714334,
+      0.040398035000180244,
+      0.04127536799933296,
+      0.04175480699996115,
+      0.05551524700058508,
+      0.04057241000009526,
+      0.04036809299941524,
+      0.04763831300078891,
+      0.040961840999443666,
+      0.04156057399995916,
+      0.04104535999977088,
+      0.04253337900081533,
+      0.045506704000217724,
+      0.04184245400028885,
+      0.040735819999099476,
+      0.04078864400071325,
+      0.04145496700039075,
+      0.0411327040001197,
+      0.04004781499861565,
+      0.040358338001169614
+    ],
+    "uncached": [
+      1.573206252000091,
+      1.5760485420014447,
+      1.5775718839995534,
+      1.573242026999651,
+      1.5764258159997553,
+      1.5780755630003114,
+      1.5776840990001801,
+      1.5721288650001952,
+      1.5822793579991412,
+      1.582129493001048,
+      1.5830392239986395,
+      1.576971462000074,
+      1.5763693140015675,
+      1.5795294159997866,
+      1.5783395139987988,
+      1.57122936199994,
+      1.5802452100015216,
+      1.585018689998833,
+      1.5841793390009116,
+      1.5810920469994016,
+      1.5877330179991986,
+      1.5854345160005323,
+      1.5888511650009605,
+      1.5818147779991705,
+      1.5893177939997258,
+      1.5840768630005186,
+      1.5905940729990107,
+      1.5836824660000275,
+      1.590106243000264,
+      1.5877586440001323,
+      1.5863247560009768,
+      1.5842655699998431,
+      1.5902747309992264,
+      1.5880505879995326,
+      1.5937818460006383,
+      1.590355611000632,
+      1.5937815649995173,
+      1.59040232299958,
+      1.5957044189999579,
+      1.5903853569998319,
+      1.5993467060015973,
+      1.5958717329995125,
+      1.5991228109996882,
+      1.5899022230005357,
+      1.5974014369985525,
+      1.595983402001366,
+      1.5914785779987142
+    ]
+  },
+  "notes": {
+    "timing": "median of repeats after 1 warm-up; torch.cuda.synchronize around every timed step",
+    "decode_tokens_per_s": "(N-1)/decode_s; first token is produced by prefill",
+    "forced_length": "ignore_eos=True so every path generates exactly N tokens"
+  }
+}
