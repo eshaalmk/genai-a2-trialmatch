@@ -6,14 +6,14 @@
   "examples_with_gold_evidence_lost": 0,
   "overall": {
     "n": 206,
-    "accuracy": 0.7281553398058253,
-    "macro_f1": 0.4653876927775233,
-    "macro_f1_gold_labels": 0.4653876927775233,
+    "accuracy": 0.7330097087378641,
+    "macro_f1": 0.46847324778359256,
+    "macro_f1_gold_labels": 0.46847324778359256,
     "per_class": {
       "included": {
-        "precision": 0.9565217391304348,
-        "recall": 0.8148148148148148,
-        "f1": 0.88,
+        "precision": 0.92,
+        "recall": 0.8518518518518519,
+        "f1": 0.8846153846153846,
         "support": 27
       },
       "not included": {
@@ -35,9 +35,9 @@
         "support": 91
       },
       "not enough information": {
-        "precision": 0.7115384615384616,
+        "precision": 0.74,
         "recall": 0.5606060606060606,
-        "f1": 0.6271186440677966,
+        "f1": 0.6379310344827587,
         "support": 66
       },
       "not applicable": {
@@ -57,19 +57,19 @@
     ],
     "confusion_matrix": [
       [
-        22,
+        23,
         0,
         0,
         0,
-        5,
+        4,
         0
       ],
       [
+        1,
         0,
         0,
         0,
-        0,
-        7,
+        6,
         0
       ],
       [
@@ -108,14 +108,14 @@
   },
   "inclusion": {
     "n": 75,
-    "accuracy": 0.7866666666666666,
-    "macro_f1": 0.4255555555555556,
-    "macro_f1_gold_labels": 0.4255555555555556,
+    "accuracy": 0.8,
+    "macro_f1": 0.43138111888111885,
+    "macro_f1_gold_labels": 0.43138111888111885,
     "per_class": {
       "included": {
-        "precision": 0.9565217391304348,
-        "recall": 0.8148148148148148,
-        "f1": 0.88,
+        "precision": 0.92,
+        "recall": 0.8518518518518519,
+        "f1": 0.8846153846153846,
         "support": 27
       },
       "not included": {
@@ -125,9 +125,9 @@
         "support": 7
       },
       "not enough information": {
-        "precision": 0.7115384615384616,
+        "precision": 0.74,
         "recall": 0.9736842105263158,
-        "f1": 0.8222222222222222,
+        "f1": 0.8409090909090909,
         "support": 38
       },
       "not applicable": {
@@ -145,15 +145,15 @@
     ],
     "confusion_matrix": [
       [
-        22,
+        23,
         0,
-        5,
+        4,
         0
       ],
       [
+        1,
         0,
-        0,
-        7,
+        6,
         0
       ],
       [
@@ -171,23 +171,23 @@
     ],
     "evidence": {
       "micro": {
-        "precision": 0.8461538461538461,
-        "recall": 0.532258064516129,
-        "f1": 0.6534653465346534,
-        "tp": 33,
-        "fp": 6,
-        "fn": 29
+        "precision": 0.6025641025641025,
+        "recall": 0.7580645161290323,
+        "f1": 0.6714285714285715,
+        "tp": 47,
+        "fp": 31,
+        "fn": 15
       },
       "macro_nonempty_gold": {
-        "precision": 0.5092592592592592,
-        "recall": 0.5166666666666667,
-        "f1": 0.5077248677248677,
+        "precision": 0.6461111111111111,
+        "recall": 0.6944444444444444,
+        "f1": 0.6566707366707367,
         "n_records": 45
       },
       "empty_gold": {
         "n_records": 30,
-        "correct_empty_prediction": 30,
-        "rate": 1.0
+        "correct_empty_prediction": 22,
+        "rate": 0.7333333333333333
       }
     }
   },
@@ -256,48 +256,48 @@
     ],
     "evidence": {
       "micro": {
-        "precision": 1.0,
-        "recall": 0.0625,
-        "f1": 0.11764705882352941,
-        "tp": 2,
-        "fp": 0,
-        "fn": 30
+        "precision": 0.5238095238095238,
+        "recall": 0.34375,
+        "f1": 0.4150943396226415,
+        "tp": 11,
+        "fp": 10,
+        "fn": 21
       },
       "macro_nonempty_gold": {
-        "precision": 0.125,
-        "recall": 0.125,
-        "f1": 0.125,
+        "precision": 0.328125,
+        "recall": 0.3177083333333333,
+        "f1": 0.32142857142857145,
         "n_records": 16
       },
       "empty_gold": {
         "n_records": 115,
-        "correct_empty_prediction": 115,
-        "rate": 1.0
+        "correct_empty_prediction": 111,
+        "rate": 0.9652173913043478
       }
     }
   },
   "evidence": {
     "micro": {
-      "precision": 0.8536585365853658,
-      "recall": 0.3723404255319149,
-      "f1": 0.5185185185185185,
-      "tp": 35,
-      "fp": 6,
-      "fn": 59
+      "precision": 0.5858585858585859,
+      "recall": 0.6170212765957447,
+      "f1": 0.6010362694300518,
+      "tp": 58,
+      "fp": 41,
+      "fn": 36
     },
     "macro_nonempty_gold": {
-      "precision": 0.4084699453551912,
-      "recall": 0.4139344262295082,
-      "f1": 0.40733801717408274,
+      "precision": 0.5627049180327868,
+      "recall": 0.5956284153005464,
+      "f1": 0.5687383654596769,
       "n_records": 61
     },
     "empty_gold": {
       "n_records": 145,
-      "correct_empty_prediction": 145,
-      "rate": 1.0
+      "correct_empty_prediction": 133,
+      "rate": 0.9172413793103448
     }
   },
-  "mean_new_tokens": 13.601941747572816,
+  "mean_new_tokens": 14.310679611650485,
   "run": {
     "model": {
       "architecture": "Qwen2ForCausalLM",
@@ -314,7 +314,7 @@
       "kv_cache_bytes_per_token": 28672,
       "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
       "adapter": "/content/drive/MyDrive/genai_a2/checkpoints/qwen15_lora/final_adapter",
-      "dtype": "torch.bfloat16",
+      "dtype": "torch.float16",
       "device": "cuda"
     },
     "split": "test",
@@ -323,12 +323,87 @@
       "strategy": "greedy",
       "do_sample": false,
       "num_beams": 1,
+      "repetition_penalty": 1.0,
+      "model_default_generation_config": {
+        "max_length": 20,
+        "max_new_tokens": null,
+        "min_length": 0,
+        "min_new_tokens": null,
+        "early_stopping": false,
+        "max_time": null,
+        "stop_strings": null,
+        "do_sample": true,
+        "num_beams": 1,
+        "num_beam_groups": 1,
+        "penalty_alpha": null,
+        "dola_layers": null,
+        "use_cache": true,
+        "cache_implementation": null,
+        "cache_config": null,
+        "return_legacy_cache": null,
+        "prefill_chunk_size": null,
+        "temperature": 0.7,
+        "top_k": 20,
+        "top_p": 0.8,
+        "min_p": null,
+        "typical_p": 1.0,
+        "epsilon_cutoff": 0.0,
+        "eta_cutoff": 0.0,
+        "diversity_penalty": 0.0,
+        "repetition_penalty": 1.1,
+        "encoder_repetition_penalty": 1.0,
+        "length_penalty": 1.0,
+        "no_repeat_ngram_size": 0,
+        "bad_words_ids": null,
+        "force_words_ids": null,
+        "renormalize_logits": false,
+        "constraints": null,
+        "forced_bos_token_id": null,
+        "forced_eos_token_id": null,
+        "remove_invalid_values": false,
+        "exponential_decay_length_penalty": null,
+        "suppress_tokens": null,
+        "begin_suppress_tokens": null,
+        "forced_decoder_ids": null,
+        "sequence_bias": null,
+        "token_healing": false,
+        "guidance_scale": null,
+        "low_memory": null,
+        "watermarking_config": null,
+        "num_return_sequences": 1,
+        "output_attentions": false,
+        "output_hidden_states": false,
+        "output_scores": false,
+        "output_logits": null,
+        "return_dict_in_generate": false,
+        "pad_token_id": 151643,
+        "bos_token_id": 151643,
+        "eos_token_id": [
+          151645,
+          151643
+        ],
+        "encoder_no_repeat_ngram_size": 0,
+        "decoder_start_token_id": null,
+        "is_assistant": false,
+        "num_assistant_tokens": 20,
+        "num_assistant_tokens_schedule": "constant",
+        "assistant_confidence_threshold": 0.4,
+        "prompt_lookup_num_tokens": null,
+        "max_matching_ngram_size": null,
+        "assistant_early_exit": null,
+        "assistant_lookbehind": 10,
+        "target_lookbehind": 10,
+        "disable_compile": false,
+        "generation_kwargs": {},
+        "_from_model_config": false,
+        "transformers_version": "4.51.3"
+      },
       "max_new_tokens": 96,
       "batch_size": 8,
       "padding": "left",
       "max_prompt_tokens": 1792
     },
-    "elapsed_s": 133.5230484008789,
+    "elapsed_s": 36.57802176475525,
     "n": 206
   }
 }

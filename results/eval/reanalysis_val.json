@@ -1,0 +1,184 @@
+{
+  "base": {
+    "n": 206,
+    "n_label_errors": 111,
+    "label_error_types (sum = n_label_errors)": {
+      "decision_without_information": 51,
+      "missed_information": 2,
+      "applicability_error": 13,
+      "polarity_error": 45
+    },
+    "top_confusions (gold -> pred)": {
+      "not excluded -> excluded": 42,
+      "not enough information -> included": 25,
+      "not enough information -> not excluded": 13,
+      "not enough information -> excluded": 13,
+      "not applicable -> excluded": 6,
+      "not applicable -> not excluded": 5,
+      "not included -> included": 3,
+      "not excluded -> not enough information": 2
+    },
+    "gold_decisive_with_empty_gold_evidence": "72/141",
+    "pred_decisive_with_empty_pred_evidence": "0/200",
+    "pred_unsupported_among_CORRECT_labels": 0,
+    "pred_unsupported_among_WRONG_labels": 0,
+    "records_with_empty_gold_evidence": 116,
+    "empty_gold_and_empty_pred": 2,
+    "nonempty_gold_but_empty_pred": 1,
+    "gold_label_counts": {
+      "not enough information": 53,
+      "included": 35,
+      "not excluded": 101,
+      "not applicable": 12,
+      "not included": 3,
+      "excluded": 2
+    },
+    "pred_label_counts": {
+      "included": 62,
+      "not excluded": 75,
+      "excluded": 63,
+      "not enough information": 3,
+      "not applicable": 3
+    },
+    "patients": 8
+  },
+  "finetuned": {
+    "n": 206,
+    "n_label_errors": 58,
+    "label_error_types (sum = n_label_errors)": {
+      "decision_without_information": 32,
+      "missed_information": 11,
+      "applicability_error": 12,
+      "polarity_error": 3
+    },
+    "top_confusions (gold -> pred)": {
+      "not enough information -> not excluded": 26,
+      "not applicable -> not excluded": 11,
+      "included -> not enough information": 9,
+      "not enough information -> included": 6,
+      "not included -> not enough information": 2,
+      "excluded -> not excluded": 2,
+      "not applicable -> not enough information": 1,
+      "not included -> included": 1
+    },
+    "gold_decisive_with_empty_gold_evidence": "72/141",
+    "pred_decisive_with_empty_pred_evidence": "111/173",
+    "pred_unsupported_among_CORRECT_labels": 82,
+    "pred_unsupported_among_WRONG_labels": 29,
+    "records_with_empty_gold_evidence": 116,
+    "empty_gold_and_empty_pred": 102,
+    "nonempty_gold_but_empty_pred": 25,
+    "gold_label_counts": {
+      "not enough information": 53,
+      "included": 35,
+      "not excluded": 101,
+      "not applicable": 12,
+      "not included": 3,
+      "excluded": 2
+    },
+    "pred_label_counts": {
+      "not enough information": 33,
+      "included": 33,
+      "not excluded": 140
+    },
+    "patients": 8
+  },
+  "bootstrap_over_patients": {
+    "base_acc": {
+      "mean": 0.4635287080165529,
+      "ci95": [
+        0.3170514798033356,
+        0.6195121951219512
+      ]
+    },
+    "base_macro_f1": {
+      "mean": 0.2661113282856383,
+      "ci95": [
+        0.1956954069119724,
+        0.3403765582256294
+      ]
+    },
+    "ft_acc": {
+      "mean": 0.717271163158561,
+      "ci95": [
+        0.6551673724541238,
+        0.7681832813109637
+      ]
+    },
+    "ft_macro_f1": {
+      "mean": 0.36077740298247735,
+      "ci95": [
+        0.31728726798164186,
+        0.4363174255866594
+      ]
+    },
+    "diff_acc": {
+      "mean": 0.2537424551420082,
+      "ci95": [
+        0.10522225252249795,
+        0.38757955126120675
+      ]
+    },
+    "diff_macro_f1": {
+      "mean": 0.09466607469683906,
+      "ci95": [
+        -0.009714154150512593,
+        0.20398348482903822
+      ]
+    }
+  },
+  "majority_baseline": {
+    "rule": {
+      "inclusion": "not enough information",
+      "exclusion": "not excluded"
+    },
+    "accuracy": 0.6213592233009708,
+    "macro_f1": 0.21532596441066054,
+    "train_label_counts": {
+      "not enough information": 174,
+      "not excluded": 291,
+      "not included": 13,
+      "included": 88,
+      "not applicable": 28,
+      "excluded": 8
+    }
+  },
+  "finetuned_per_class": {
+    "included": {
+      "precision": 0.7878787878787878,
+      "recall": 0.7428571428571429,
+      "f1": 0.7647058823529411,
+      "support": 35
+    },
+    "not included": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 3
+    },
+    "excluded": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 2
+    },
+    "not excluded": {
+      "precision": 0.7214285714285714,
+      "recall": 1.0,
+      "f1": 0.8381742738589212,
+      "support": 101
+    },
+    "not enough information": {
+      "precision": 0.6363636363636364,
+      "recall": 0.39622641509433965,
+      "f1": 0.4883720930232558,
+      "support": 53
+    },
+    "not applicable": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 12
+    }
+  }
+}
