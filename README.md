@@ -96,15 +96,21 @@ Manual start: `python app/app.py` (uses `weights/qwen15_lora` and `weights/qwen0
 
 ## Weights
 
-LoRA adapters (attached to the GitHub Release; downloaded automatically by the launchers):
-- Target, Qwen2.5-1.5B-Instruct + LoRA: `<release URL of qwen15_lora_adapter.zip>`
-- Draft, Qwen2.5-0.5B-Instruct + LoRA: `<release URL of qwen05_lora_adapter.zip>`
+The fine-tuned LoRA adapters are available through Google Drive:
 
-Manual download: `python scripts/download_weights.py --url <zip URL> --dest weights/qwen15_lora`.
-The base models download automatically from Hugging Face on first start (public, no token needed).
+- **Target adapter — Qwen2.5-1.5B-Instruct:** [Download target adapter](https://drive.google.com/drive/folders/1JRlnBXRM27rMjB_yDv0fb6_HaL7KxghY?usp=drive_link)
+- **Draft adapter — Qwen2.5-0.5B-Instruct:** [Download draft adapter](https://drive.google.com/drive/folders/1PLednYrQxz02hfXREQLlTyw5Ws0dRuy8?usp=drive_link)
 
-Note on precision: the reported Colab results ran in bfloat16, which the T4 emulates. Inference code now
-chooses fp16 on pre-Ampere GPUs, so app outputs may differ from the reported runs at near-tie tokens.
+These are LoRA adapters, not complete model checkpoints. The corresponding base models download from Hugging Face.
+
+For manual installation, download each `final_adapter` folder and place its contents directly into:
+
+- `weights/qwen15_lora/` — target adapter
+- `weights/qwen05_lora/` — draft adapter
+
+Each folder should contain `adapter_config.json` and `adapter_model.safetensors`.
+
+**Note on precision:** The reported Colab results ran in bfloat16, which the T4 emulates. Inference code now chooses fp16 on pre-Ampere GPUs, so app outputs may differ from the reported runs at near-tie tokens.
 
 ## Reproducibility notes
 Split: `results/data/split_manifest.json` (patient IDs and counts per split). Training config and log

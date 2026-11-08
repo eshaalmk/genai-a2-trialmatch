@@ -12,3 +12,4 @@ weights/
 data/processed/
 .gradio/
 flagged/
+.venv/

@@ -6,8 +6,8 @@ setlocal
 cd /d "%~dp0"
 
 REM ---- weight download links (direct links to the GitHub Release zip files) ----
-set ADAPTER_URL=PASTE_QWEN15_ADAPTER_ZIP_URL_HERE
-set DRAFT_ADAPTER_URL=PASTE_QWEN05_DRAFT_ADAPTER_ZIP_URL_HERE
+set ADAPTER_URL=
+set DRAFT_ADAPTER_URL=
 
 if exist ".venv\Scripts\python.exe" goto have_env
 echo [setup] Creating Python environment - first run only...
@@ -49,6 +49,6 @@ if not exist "data\processed\val.jsonl" (
   ".venv\Scripts\python.exe" scripts\prepare_data.py --no_tokenizer --out_results data\processed\manifest_check >nul 2>&1
 )
 
-echo Starting TrialMatch - the browser opens automatically at http://127.0.0.1:7860
-".venv\Scripts\python.exe" app\app.py
+echo Starting TrialMatch with fine-tuned adapters...
+".venv\Scripts\python.exe" app\app.py --adapter "weights\qwen15_lora" --draft_adapter "weights\qwen05_lora"
 pause
