@@ -50,7 +50,8 @@ def main():
             f.write(json.dumps(p) + "\n")
     m = compute_metrics(preds)
     m["run"] = {"model": describe_model(model), "split": a.split, "tag": a.tag,
-                "decoding": {"strategy": "greedy", "do_sample": False, "num_beams": 1,
+                "decoding": {"strategy": "greedy", "do_sample": False, "num_beams": 1, "repetition_penalty": 1.0,
+                             "model_default_generation_config": getattr(model, "_tm_original_generation_config", None),
                              "max_new_tokens": a.max_new_tokens, "batch_size": a.batch_size,
                              "padding": "left", "max_prompt_tokens": C.MAX_PROMPT_TOKENS},
                 "elapsed_s": elapsed, "n": len(preds)}

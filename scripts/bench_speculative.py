@@ -14,7 +14,7 @@ import torch
 
 from trialmatch import config as C
 from trialmatch.data import read_jsonl
-from trialmatch.decoding import first_mismatch, manual_cached, measure
+from trialmatch.decoding import first_mismatch, investigate_mismatch, manual_cached, measure
 from trialmatch.manual_decoder import ManualDecoder
 from trialmatch.modeling import describe_model, load_model, stop_token_ids
 from trialmatch.prompts import build_prompt
@@ -26,7 +26,7 @@ def hf_greedy(model, ids, N, stops):
     min_new_tokens, which suppresses EOS logits and so changes the argmax)."""
     with torch.no_grad():
         g = model.generate(input_ids=ids, attention_mask=torch.ones_like(ids), max_new_tokens=N,
-                           do_sample=False, num_beams=1, temperature=None, top_p=None, top_k=None,
+                           do_sample=False, num_beams=1, temperature=None, top_p=None, top_k=None, repetition_penalty=1.0,
                            eos_token_id=sorted(stops), pad_token_id=min(stops))
     return g[0, ids.shape[1]:].tolist()
 
@@ -42,17 +42,19 @@ def main():
     ap.add_argument("--forced_len", type=int, default=128)
     ap.add_argument("--attn", default="torch_sdpa")
     ap.add_argument("--repeats", type=int, default=2)
+    ap.add_argument("--dtype", default=None, help="fp16/bf16/fp32 (fp32 = numerical-tie check)")
+    ap.add_argument("--settings", nargs="+", default=["natural_eos", "forced"], help="subset to run")
     ap.add_argument("--out", default=str(C.RESULTS_DIR / "speculative"))
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
 
-    target, tok = load_model(a.base, a.adapter)
+    target, tok = load_model(a.base, a.adapter, dtype=a.dtype)
     dev = next(target.parameters()).device
     stops = stop_token_ids(tok)
     tdec = ManualDecoder(target, attn_impl=a.attn)
-    drafts = {"draft_base": load_model(a.draft_base, None)}
+    drafts = {"draft_base": load_model(a.draft_base, None, dtype=a.dtype)}
     if a.draft_adapter:
-        drafts["draft_finetuned"] = load_model(a.draft_base, a.draft_adapter)
+        drafts["draft_finetuned"] = load_model(a.draft_base, a.draft_adapter, dtype=a.dtype)
     compat = {n: check_tokenizer_compat(tok, dt) for n, (dm, dt) in drafts.items()}
     print("tokenizer compatibility:", compat)
     for n, c in compat.items():
@@ -66,6 +68,7 @@ def main():
         prompts.append(torch.tensor([ids], device=dev))
 
     settings = [("natural_eos", C.MAX_NEW_TOKENS, False), (f"forced_{a.forced_len}", a.forced_len, True)]
+    settings = [x for x in settings if any(x[0].startswith(t) for t in a.settings)]
     runs, equality = [], []
     for sname, N, ignore in settings:
         for pi, ids in enumerate(prompts):
@@ -85,6 +88,10 @@ def main():
                     eq_row[f"{dname}_k{k}"] = mm is None
                     if mm is not None:
                         eq_row[f"{dname}_k{k}_first_mismatch"] = mm
+                        # top-2 logit margin of the target at the divergence (full uncached forward on
+                        # the shared prefix): a margin of one or two dtype rounding steps = numerical tie
+                        inv = investigate_mismatch(target, ids, base_tokens, m["tokens"], mm)
+                        eq_row[f"{dname}_k{k}_margin"] = inv["margin"]
                     runs.append({"setting": sname, "prompt": pi, "method": "speculative", "draft": dname, "k": k,
                                  **{x: m[x] for x in ("n_new_tokens", "prefill_s", "decode_s", "total_s",
                                                       "e2e_tokens_per_s", "peak_mem_bytes", "acceptance_rate",
@@ -99,7 +106,7 @@ def main():
                     _sync(); t = time.perf_counter()
                     with torch.no_grad():
                         g = target.generate(input_ids=ids, attention_mask=torch.ones_like(ids), assistant_model=dmodel,
-                                            max_new_tokens=N, do_sample=False, temperature=None, top_p=None,
+                                            max_new_tokens=N, do_sample=False, repetition_penalty=1.0, temperature=None, top_p=None,
                                             top_k=None, eos_token_id=sorted(stops), pad_token_id=min(stops))
                     _sync()
                     eq_row[f"{dname}_hf_assisted_equal"] = first_mismatch(base_tokens, g[0, ids.shape[1]:].tolist()) is None
@@ -126,9 +133,12 @@ def main():
                         "tokens_per_target_forward": agg("tokens_per_target_forward"),
                         "peak_mem_mib": (agg("peak_mem_bytes") or 0) / 2**20})
     eq_keys = sorted({k for e in equality for k in e} - {"setting", "prompt", "input_len"})
-    eq_keys = [k for k in eq_keys if k not in ("setting", "prompt", "input_len") and not k.endswith(("_first_mismatch", "_error"))]
+    eq_keys = [k for k in eq_keys if k not in ("setting", "prompt", "input_len") and not k.endswith(("_first_mismatch", "_error", "_margin"))]
     eq_rate = {k: sum(bool(e[k]) for e in equality if k in e) / max(1, sum(k in e for e in equality)) for k in eq_keys}
-    res = {"target": describe_model(target), "drafts": {n: describe_model(m) for n, (m, _) in drafts.items()},
+    margins = [v for e in equality for k, v in e.items() if k.endswith("_margin")]
+    res_margin = {"n_mismatches": len(margins), "max_margin": max(margins) if margins else None,
+                  "margins": sorted(margins)}
+    res = {"mismatch_margins": res_margin, "target": describe_model(target), "drafts": {n: describe_model(m) for n, (m, _) in drafts.items()},
            "tokenizer_compat": compat, "attention": a.attn, "equality": equality, "equality_rate": eq_rate,
            "summary": summary, "runs": runs,
            "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu"}
@@ -140,7 +150,8 @@ def main():
         lines.append(f"| {r['setting']} | {r['method']} | {r['draft'] or '-'} | {r['k'] or '-'} | {f(r['tokens_per_s'],1)} | "
                      f"{f(r['speedup_vs_greedy'])} | {f(r['acceptance_rate'])} | {f(r['mean_accepted_per_round'])} | "
                      f"{f(r['tokens_per_target_forward'])} | {f(r['peak_mem_mib'],0)} |")
-    lines += ["", "Token-equality rate vs greedy target:", "```", json.dumps(eq_rate, indent=2), "```"]
+    lines += ["", "Token-equality rate vs greedy target:", "```", json.dumps(eq_rate, indent=2), "```",
+              "", f"Target top-2 logit margin at each mismatch: {json.dumps(res_margin)}"]
     (out / "speculative_summary.md").write_text("\n".join(lines))
     print("\n".join(lines))
 
@@ -148,7 +159,7 @@ def main():
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     fig, axs = plt.subplots(1, 2, figsize=(11, 3.6))
-    for s, ls in ((settings[0][0], "-"), (settings[1][0], "--")):
+    for s, ls in zip([x[0] for x in settings], ["-", "--"]):
         for d, c in (("draft_base", "#9aa5b1"), ("draft_finetuned", "#3b6ea5")):
             rs = sorted([r for r in summary if r["setting"] == s and r["draft"] == d and r["method"] == "speculative"],
                         key=lambda r: r["k"])

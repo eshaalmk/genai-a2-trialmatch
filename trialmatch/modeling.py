@@ -12,7 +12,10 @@ def pick_device_dtype(dtype: Optional[str] = None):
     if torch.cuda.is_available():
         dev = "cuda"
         if dtype is None:
-            dtype = "bf16" if torch.cuda.is_bf16_supported() else "fp16"
+            # Native bf16 needs Ampere (compute capability >= 8). Older GPUs such as the T4
+            # (7.5) report bf16 as "supported" but emulate it slowly, so use fp16 there.
+            # NOTE: the submitted Colab results were produced before this fix, in bf16.
+            dtype = "bf16" if torch.cuda.get_device_capability(0)[0] >= 8 else "fp16"
     else:
         dev = "cpu"
         dtype = dtype or "fp32"
@@ -46,6 +49,17 @@ def load_model(base_id: str, adapter: Optional[str] = None, dtype: Optional[str]
             model = model.merge_and_unload()
     model.to(dev).eval()
     model.config.use_cache = True
+    # Qwen2.5-Instruct ships a generation_config with sampling settings AND a
+    # repetition_penalty > 1. do_sample=False disables sampling but NOT the repetition
+    # penalty, so HF generate() would not be pure greedy decoding. Neutralise everything
+    # so generate() == argmax decoding, identical to the hand-written decoders.
+    gc = model.generation_config
+    model._tm_original_generation_config = gc.to_dict()
+    gc.do_sample = False
+    gc.temperature = None
+    gc.top_p = None
+    gc.top_k = None
+    gc.repetition_penalty = 1.0
     model._tm_meta = {"base_model": base_id, "adapter": adapter, "dtype": str(dt), "device": dev}
     return model, tok
 

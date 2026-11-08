@@ -41,7 +41,7 @@ def predict_records(model, tok, recs: List[Dict], batch_size: int = 8,
             gen = model.generate(input_ids=ids.to(dev), attention_mask=att.to(dev),
                                  max_new_tokens=max_new_tokens, do_sample=False, num_beams=1,
                                  temperature=None, top_p=None, top_k=None,
-                                 eos_token_id=stops, pad_token_id=tok.pad_token_id)
+                                 repetition_penalty=1.0, eos_token_id=stops, pad_token_id=tok.pad_token_id)
         dt = (time.time() - t0) / len(idx)
         for j, i in enumerate(idx):
             new = gen[j, L:].tolist()

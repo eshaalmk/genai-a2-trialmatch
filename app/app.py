@@ -291,25 +291,39 @@ def build_ui():
     return demo
 
 
+DEFAULT_ADAPTER = ROOT / "weights" / "qwen15_lora"
+DEFAULT_DRAFT_ADAPTER = ROOT / "weights" / "qwen05_lora"
+
+
+def _default(env, path):
+    """Env var wins; otherwise use the standard weights/ folder if it holds an adapter."""
+    if os.environ.get(env):
+        return os.environ[env]
+    return str(path) if (path / "adapter_config.json").exists() else None
+
+
 def main():
     global SCREENER
     ap = argparse.ArgumentParser()
     ap.add_argument("--base", default=os.environ.get("TM_BASE_MODEL", C.TARGET_MODEL))
-    ap.add_argument("--adapter", default=os.environ.get("TM_ADAPTER"))
+    ap.add_argument("--adapter", default=_default("TM_ADAPTER", DEFAULT_ADAPTER))
     ap.add_argument("--draft_base", default=os.environ.get("TM_DRAFT_MODEL", C.DRAFT_MODEL))
-    ap.add_argument("--draft_adapter", default=os.environ.get("TM_DRAFT_ADAPTER"))
+    ap.add_argument("--draft_adapter", default=_default("TM_DRAFT_ADAPTER", DEFAULT_DRAFT_ADAPTER))
     ap.add_argument("--no_draft", action="store_true")
     ap.add_argument("--share", action="store_true", help="public *.gradio.live link (use in Colab)")
     ap.add_argument("--port", type=int, default=int(os.environ.get("PORT", 7860)))
-    ap.add_argument("--host", default="0.0.0.0")
+    ap.add_argument("--host", default="127.0.0.1", help="0.0.0.0 to allow other devices on the network")
+    ap.add_argument("--no_browser", action="store_true", help="do not open a browser tab automatically")
     a = ap.parse_args()
     if not a.adapter:
-        print("WARNING: no --adapter given; running the BASE model (before fine-tuning).")
-    print("Loading models ...")
+        print("WARNING: no adapter found in weights/qwen15_lora and none given; running the BASE model.")
+    print("Loading models (first start downloads ~4 GB of base weights from Hugging Face) ...")
     SCREENER = Screener(a.base, a.adapter, None if a.no_draft else a.draft_base, a.draft_adapter)
     print("Models loaded:", SCREENER.info)
     demo = build_ui()
+    print(f"\n>>> Open http://127.0.0.1:{a.port} in your browser (keep this window open) <<<\n")
     demo.queue(default_concurrency_limit=1).launch(server_name=a.host, server_port=a.port, share=a.share,
+                                                   inbrowser=not (a.no_browser or a.share),
                                                    allowed_paths=[str(REPORT_DIR)])
 
 

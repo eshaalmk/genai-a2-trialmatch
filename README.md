@@ -72,20 +72,39 @@ python scripts/evaluate_model.py --tag finetuned --split test --final --adapter 
 python scripts/compare_before_after.py
 ```
 
-## Starting the application
+## Starting the application (no coding needed)
 
-```bash
-# with trained weights downloaded from the Hub:
-python scripts/download_weights.py --hub_repo <hf-user>/trialmatch-qwen15-lora --dest weights/qwen15_lora
-python app/app.py --adapter weights/qwen15_lora            # open http://127.0.0.1:7860
-# in Colab add --share and open the printed https://*.gradio.live link
-```
-`--adapter` also accepts a Hub repo id directly. The app validates inputs (empty note, too-long note or
-criterion, no criteria, bad NCT ID, ClinicalTrials.gov unreachable) and reports errors in the UI.
+Requirements: Python 3.10+ ([python.org](https://www.python.org/downloads/), tick *Add python.exe to PATH*),
+internet on first start, ~8 GB free RAM and ~10 GB disk. An NVIDIA GPU is optional (CPU works: a few
+seconds per criterion).
+
+1. Download this repository (green **Code** button → *Download ZIP*) and unzip it.
+2. **Windows:** double-click `start_app.bat`. **macOS/Linux:** run `bash start_app.sh`.
+3. The first start creates a local environment, installs packages and downloads the weights
+   (about 15–20 minutes, once). The browser then opens at **http://127.0.0.1:7860**.
+   Later starts take about a minute. Keep the launcher window open while using the app; close it to stop.
+
+The app validates inputs (empty note, too-long note or criterion, no criteria, bad NCT ID,
+ClinicalTrials.gov unreachable) and reports errors in the UI. Reports are saved to `results/app_reports/`
+and offered as downloads.
+
+Optional NVIDIA GPU acceleration (Windows), run once after the first start:
+`.venv\Scripts\python -m pip install torch --index-url https://download.pytorch.org/whl/cu124 --force-reinstall`
+
+Manual start: `python app/app.py` (uses `weights/qwen15_lora` and `weights/qwen05_lora` automatically;
+`--share` gives a public link, e.g. in Colab).
 
 ## Weights
 
-Adapter download: `<fill in: Hugging Face repo or Drive link>` · Base model downloads automatically.
+LoRA adapters (attached to the GitHub Release; downloaded automatically by the launchers):
+- Target, Qwen2.5-1.5B-Instruct + LoRA: `<release URL of qwen15_lora_adapter.zip>`
+- Draft, Qwen2.5-0.5B-Instruct + LoRA: `<release URL of qwen05_lora_adapter.zip>`
+
+Manual download: `python scripts/download_weights.py --url <zip URL> --dest weights/qwen15_lora`.
+The base models download automatically from Hugging Face on first start (public, no token needed).
+
+Note on precision: the reported Colab results ran in bfloat16, which the T4 emulates. Inference code now
+chooses fp16 on pre-Ampere GPUs, so app outputs may differ from the reported runs at near-tie tokens.
 
 ## Reproducibility notes
 Split: `results/data/split_manifest.json` (patient IDs and counts per split). Training config and log
