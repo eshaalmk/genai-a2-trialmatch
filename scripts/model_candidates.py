@@ -24,9 +24,11 @@ def count_params(model_id):
     cfg = AutoConfig.from_pretrained(model_id)
     with init_empty_weights():
         m = AutoModelForCausalLM.from_config(cfg)
+
+    # Ensure tied embeddings are counted only once.
+    m.tie_weights()
+
     n = sum(p.numel() for p in m.parameters())
-    if getattr(cfg, "tie_word_embeddings", False):
-        pass  # parameters() already deduplicates tied tensors
     return cfg, n
 
 
